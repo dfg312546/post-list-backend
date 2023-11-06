@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const mongoose = require('mongoose');
 
 const postsRoutes = require('./api/routes/post-routes');
@@ -9,10 +8,16 @@ const usersRoutes = require('./api/routes/users-routes');
 const HttpError = require('./api/models/http-error');
 
 const app = express();
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 app.use(bodyParser.json());
 
-app.use(cors());
 
 
 app.use('/api/posts',postsRoutes);

@@ -3,9 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const postsRoutes = require('./routes/post-routes');
-const usersRoutes = require('./routes/users-routes');
-const HttpError = require('./models/http-error');
+const postsRoutes = require('./api/routes/post-routes');
+const usersRoutes = require('./api/routes/users-routes');
+const HttpError = require('./api/models/http-error');
 
 const app = express();
 

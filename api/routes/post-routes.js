@@ -2,7 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 
 const router = express.Router();
-const postControllers = require('../../controllers/posts-controllers')
+const postControllers = require('../controllers/posts-controllers')
 
 router.get('/',postControllers.getPosts);
 

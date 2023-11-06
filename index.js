@@ -20,7 +20,7 @@ app.use('/api/posts',postsRoutes);
 
 app.use((req,res,next) => {
   const error = new HttpError('Could not find this route.',404);
-  throw error
+  next(error);
 });
 
 app.use((error, req, res, next) => {

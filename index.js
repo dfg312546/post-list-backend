@@ -22,6 +22,8 @@ app.use((req, res, next) => {//避免CORS錯誤
   next();
 })
 
+app.use(express.static('public'))
+
 app.use('/api/posts',postsRoutes);
 // app.use('/api/users',usersRoutes);
 

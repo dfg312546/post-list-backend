@@ -11,6 +11,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use(cors());
+
 app.use((req, res, next) => {//避免CORS錯誤
   res.setHeader('Access-Control-Allow-Origin','*');
   res.setHeader(

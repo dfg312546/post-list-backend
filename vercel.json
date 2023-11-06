@@ -5,11 +5,18 @@
       "src": "index.js",
       "use": "@now/node"
     },
-        {
+    {
       "src": "routes/**",
       "use": "@now/node"
+    },
+    {
+      "src": "models/**",
+      "use": "@now/node"
+    },
+    {
+      "src": "controllers/**",
+      "use": "@now/node"
     }
-
   ],
   "routes": [
     {

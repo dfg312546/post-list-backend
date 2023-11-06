@@ -5,8 +5,18 @@
       "src": "index.js",
       "use": "@now/node"
     },
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "*.js", "use": "@vercel/node" }
+    {
+      "src": "routes/**",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "controllers/**",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "models/**",
+      "use": "@vercel/node"
+    }
   ],
   "routes": [
     {

@@ -115,6 +115,10 @@ const updatePost = async (req, res, next) => {
     return next(error)
   }
 
+  console.log('req.userData.userId:', req.userData.userId);
+  console.log('post.creator.toString():', post.creator.toString());
+
+
   if (post.creator.toString() !== req.userData.userId) {
     const error = new HttpError(
       'You are not allowed to edit this post.',

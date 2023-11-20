@@ -63,6 +63,7 @@ const signup = async (req, res, next) => {
     name,
     email,
     password: hashedPassword,
+    posts: [],
   });
 
   try {

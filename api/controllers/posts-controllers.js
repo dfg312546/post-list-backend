@@ -168,6 +168,15 @@ const deletePost = async (req, res, next) => {
     return next(error);
   }
 
+  try {
+    await post.deleteOne()
+  } catch (err) {
+    const error = new HttpError(
+      'Something went wrong, could not delete post.',
+      500
+    );
+    return next(error);
+  }
 
   // try {
   //   const sess = await mongoose.startSession();

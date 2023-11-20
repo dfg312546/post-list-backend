@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
       throw new Error('Authentication failed!');
     }
     const decodedToken = jwt.verify(token, 'supersecret_dont_share');
-    req.userData = { userId: decodedToken.userId };
+    req.userData = { userId: decodedToken.userId };//在req物件加入userData屬性
     next();
   } catch (err) {
     const error = new HttpError('Authentication failed!', 401);

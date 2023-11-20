@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const HttpError = require('../models/http-error');
 const Post = require('../models/post');
+const User = require('../models/user')
 
 const createPost = async (req, res, next) => {
   const errors = validationResult(req);
@@ -16,11 +17,36 @@ const createPost = async (req, res, next) => {
     title,
     description,
     date,
-    creator:name
-  })
+    creator:name,
+    creatorId,
+  });
+
+  let user;
+  try {
+    user = await User.findById(creatorId);
+  } catch (err) {
+    const error = new HttpError(
+      'Creating post failed, please try again.',
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError('Could not find user for provided id.', 404);
+    return next(error);
+  }
+
+  console.log(user);
+
 
   try {
-    await createdPost.save();
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await createdPost.save({ session: sess });
+    user.posts.push(createdPost);
+    await user.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
       'Creating post failed, please try again.',

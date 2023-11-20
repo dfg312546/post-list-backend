@@ -115,8 +115,6 @@ const updatePost = async (req, res, next) => {
     return next(error)
   }
 
-  console.log('req.userData.userId:', req.userData.userId);
-  console.log('post.creator.toString():', post.creator.toString());
 
 
   if (post.creator.toString() !== req.userData.userId) {
@@ -161,12 +159,25 @@ const deletePost = async (req, res, next) => {
     const error = new HttpError('Could not find a post for the provided id.', 404);
     return next(error)
   }
+  if (post.creator.id !== req.userData.userId) {
+    const error = new HttpError(
+      'You are not allowed to delete this post.',
+      401
+    );
+    return next(error);
+  }
+
 
   try {
-    await post.deleteOne()
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await post.deleteOne({ session: sess });
+    post.creator.posts.pull(post);
+    await post.creator.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
-      'Something went wrong, could not delete post.',
+      'Something went wrong, could not delete place.',
       500
     );
     return next(error);

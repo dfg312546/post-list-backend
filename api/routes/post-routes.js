@@ -29,7 +29,7 @@ router.patch('/:postId',
     check('title')
     .not()
     .isEmpty(),
-    check('description').isLength({ min: 5 }),
+    check('description').isLength({ min: 2 }),
   ],
   postControllers.updatePost
 );

@@ -158,7 +158,7 @@ const deletePost = async (req, res, next) => {
     return next(error)
   }
 
-  if (post.creator.id !== req.userData.userId) {
+  if (post.creator.toString() !== req.userData.userId) {
     const error = new HttpError(
       'You are not allowed to delete this place.',
       401

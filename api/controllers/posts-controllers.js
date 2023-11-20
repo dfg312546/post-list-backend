@@ -117,7 +117,7 @@ const updatePost = async (req, res, next) => {
 
   if (post.creator.toString() !== req.userData.userId) {
     const error = new HttpError(
-      'You are not allowed to edit this place.',
+      'You are not allowed to edit this post.',
       401
     );
     return next(error);
@@ -158,8 +158,22 @@ const deletePost = async (req, res, next) => {
     return next(error)
   }
 
+  if (post.creator.id !== req.userData.userId) {
+    const error = new HttpError(
+      'You are not allowed to delete this place.',
+      401
+    );
+    return next(error);
+  }
+
+
   try {
-    await post.deleteOne()
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await post.remove({ session: sess });
+    post.creator.posts.pull(post);
+    await post.creator.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
       'Something went wrong, could not delete post.',

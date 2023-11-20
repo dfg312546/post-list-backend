@@ -17,13 +17,12 @@ const createPost = async (req, res, next) => {
     title,
     description,
     date,
-    creator:name,
-    creatorId,
+    creator,
   });
 
   let user;
   try {
-    user = await User.findById(creatorId);
+    user = await User.findById(creator);
   } catch (err) {
     const error = new HttpError(
       'Creating post failed, please try again.',

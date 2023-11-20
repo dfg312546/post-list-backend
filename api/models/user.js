@@ -7,7 +7,7 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minlength: 6 },
   // image: { type: String, required: true },
-  posts: [{ type: mongoose.Types.ObjectId, ref: 'Post' }]
+  posts: [{ type: mongoose.Types.ObjectId, required:true , ref: 'Post' }]
 });
 
 

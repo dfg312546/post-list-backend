@@ -10,13 +10,13 @@ const createPost = async (req, res, next) => {
     return next(new HttpError('Invalid inputs passed, please check your data.', 422));
   }
 
-  const { title,description,date } = req.body;
+  const { title,description,date,name } = req.body;
 
   const createdPost = new Post({
     title,
     description,
     date,
-    creator:'Yang'
+    creator:name
   })
 
   try {
